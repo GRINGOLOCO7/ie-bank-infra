@@ -53,7 +53,7 @@ jobs:
           resourceGroupName: ${{ env.RESOURCE_GROUP_DEV }}
           template: ./main.bicep
           parameters: |
-            @appServiceAPIAppName=${{ vars.APP_NAME }}   # Assuming APP_NAME is defined in your vars
+            appServiceAPIAppName=${{ vars.APP_NAME }}   # Assuming APP_NAME is defined in your vars
             appServiceAPIDBHostDBUSER=${{ secrets.DBUSER }}
             appServiceAPIDBHostFLASK_APP=${{ vars.FLASK_APP }}
             appServiceAPIDBHostFLASK_DEBUG=${{ vars.FLASK_DEBUG }}
@@ -94,7 +94,7 @@ jobs:
           resourceGroupName: ${{ env.RESOURCE_GROUP_UAT }}
           template: ./main.bicep
           parameters: |
-            @appServiceAPIAppName=${{ vars.APP_NAME }}   # Assuming APP_NAME is defined in your vars
+            appServiceAPIAppName=${{ vars.APP_NAME }}   # Assuming APP_NAME is defined in your vars
             appServiceAPIDBHostDBUSER=${{ secrets.DBUSER }}
             appServiceAPIDBHostFLASK_APP=${{ vars.FLASK_APP }}
             appServiceAPIDBHostFLASK_DEBUG=${{ vars.FLASK_DEBUG }}
