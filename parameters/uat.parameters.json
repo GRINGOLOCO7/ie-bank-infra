@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "environmentType": {
+            "value": "nonprod" // Change to 'nonprod' or 'uat' based on your definitions
+        },
+        "postgreSQLServerName": {
+            "value": "gringo-dbsrv-uat" // UAT database server name
+        },
+        "postgreSQLDatabaseName": {
+            "value": "gringo-db-uat" // UAT database name
+        },
+        "appServicePlanName": {
+            "value": "gringo-asp-uat" // UAT App Service Plan name
+        },
+        "appServiceAPIAppName": {
+            "value": "gringo-be-uat" // UAT API App Service name
+        },
+        "appServiceAppName": {
+            "value": "gringo-fe-uat" // UAT Frontend App Service name
+        },
+        "location": {
+            "value": "North Europe" // Keep the location as required
+        }
+    }
+}

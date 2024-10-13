@@ -16,7 +16,8 @@ param appServiceAPIDBHostFLASK_DEBUG string
 ])
 param environmentType string
 
-var appServicePlanSkuName = (environmentType == 'prod') ? 'B1' : 'B1' //modify according to desired capacity
+// Define App Service Plan SKU based on environment type
+var appServicePlanSkuName = (environmentType == 'prod') ? 'P1v2' : 'B1' // Use 'P1v2' for Production and 'B1' for non-Production
 
 resource appServicePlan 'Microsoft.Web/serverFarms@2022-03-01' = {
   name: appServicePlanName
@@ -30,6 +31,7 @@ resource appServicePlan 'Microsoft.Web/serverFarms@2022-03-01' = {
   }
 }
 
+// API App Resource
 resource appServiceAPIApp 'Microsoft.Web/sites@2022-03-01' = {
   name: appServiceAPIAppName
   location: location
@@ -78,6 +80,7 @@ resource appServiceAPIApp 'Microsoft.Web/sites@2022-03-01' = {
   }
 }
 
+// Main App Resource
 resource appServiceApp 'Microsoft.Web/sites@2022-03-01' = {
   name: appServiceAppName
   location: location
@@ -89,9 +92,10 @@ resource appServiceApp 'Microsoft.Web/sites@2022-03-01' = {
       alwaysOn: false
       ftpsState: 'FtpsOnly'
       appCommandLine: 'pm2 serve /home/site/wwwroot --spa --no-daemon'
-      appSettings: []
+      appSettings: [] // Add any specific settings needed for the main app
     }
   }
 }
 
+// Output the default host name of the app service app
 output appServiceAppHostName string = appServiceApp.properties.defaultHostName
