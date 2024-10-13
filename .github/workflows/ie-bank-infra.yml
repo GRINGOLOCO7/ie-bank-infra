@@ -29,7 +29,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    environment: ${{ github.event_name == 'pull_request' && github.ref == 'refs/heads/main' ? 'UAT' : 'Development' }}  # Set environment based on event
+    environment:
+      ${{ github.event_name == 'pull_request' && github.ref == 'refs/heads/main' ? 'UAT' : 'Development' }}  # Set environment based on event
 
     steps:
       # Checkout code
