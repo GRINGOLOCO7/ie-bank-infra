@@ -29,8 +29,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    environment:
-      ${{ github.event_name == 'pull_request' && github.ref == 'refs/heads/main' ? 'UAT' : 'Development' }}  # Set environment based on event
+    environment: ${{ github.event_name == 'pull_request' && github.ref == 'refs/pull/main' ? 'UAT' : 'Development' }}  # Set environment based on event
 
     steps:
       # Checkout code
@@ -46,7 +45,14 @@ jobs:
         uses: azure/arm-deploy@v1
         with:
           subscriptionId: ${{ env.SUBSCRIPTION_ID_DEV }}
-          resourceGroupName: ${{ github.event_name == 'pull_request' && github.ref == 'refs/heads/main' ? env.RESOURCE_GROUP_UAT : env.RESOURCE_GROUP_DEV }}  # Select resource group based on event
+          resourceGroupName: ${{ github.event_name == 'pull_request' && github.ref == 'refs/pull/main' ? env.RESOURCE_GROUP_UAT : env.RESOURCE_GROUP_DEV }}  # Select resource group based on event
           template: ./main.bicep
-          parameters: ./parameters/dev.parameters.json appServiceAPIEnvVarENV=${{ vars.ENV }} appServiceAPIEnvVarDBHOST=${{ vars.DBHOST }} appServiceAPIEnvVarDBNAME=${{ vars.DBNAME }} appServiceAPIEnvVarDBPASS=${{ secrets.DBPASS }} appServiceAPIDBHostDBUSER=${{ secrets.DBUSER }} appServiceAPIDBHostFLASK_APP=${{ vars.FLASK_APP }} appServiceAPIDBHostFLASK_DEBUG=${{ vars.FLASK_DEBUG }}
+          parameters: |
+            appServiceAPIEnvVarENV=${{ vars.ENV }}
+            appServiceAPIEnvVarDBHOST=${{ vars.DBHOST }}
+            appServiceAPIEnvVarDBNAME=${{ vars.DBNAME }}
+            appServiceAPIEnvVarDBPASS=${{ secrets.DBPASS }}
+            appServiceAPIDBHostDBUSER=${{ secrets.DBUSER }}
+            appServiceAPIDBHostFLASK_APP=${{ vars.FLASK_APP }}
+            appServiceAPIDBHostFLASK_DEBUG=${{ vars.FLASK_DEBUG }}
           deploymentName: ${{ env.USER_ALIAS }}-${{ github.event_name == 'pull_request' ? 'uat' : 'dev' }}  # Append suffix based on event type
