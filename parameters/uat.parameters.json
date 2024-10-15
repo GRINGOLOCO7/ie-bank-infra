@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "environmentType": {
-            "value": "nonprod" // Change to 'nonprod' or 'uat' based on your definitions
+            "value": "prod"
         },
         "postgreSQLServerName": {
             "value": "gringo-dbsrv-uat" // UAT database server name
